@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Users from "./components/users";
 import api from "./api";
-import SearchStatus from "./components/searchStatus";
 
 const App = () => {
     // prevState = предыдущее состояние
 
-    const [users, setUsers] = useState(api.users.fetchAll());
+    const [users, setUsers] = useState();
+
+    useEffect(() => {
+        api.users.fetchAll().then((data) => setUsers(data));
+    }, []);
 
     const handleDelete = (userId) => {
         setUsers((prevState) =>
@@ -27,12 +30,13 @@ const App = () => {
 
     return (
         <>
-            <SearchStatus length={users.length} />
-            <Users
-                users={users}
-                handleDelete={handleDelete}
-                handleToogleBookmark={handleToogleBookmark}
-            />
+            {users && (
+                <Users
+                    users={users}
+                    handleDelete={handleDelete}
+                    handleToogleBookmark={handleToogleBookmark}
+                />
+            )}
         </>
     );
 };
