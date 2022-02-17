@@ -1,17 +1,16 @@
 import React from "react";
 import Bookmark from "./bookmark";
-import Qualitie from "./qualitie";
 import PropTypes from "prop-types";
+import QualitiesList from "./qualitiesList";
 
 const User = ({ user, handleDelete, handleToogleBookmark }) => {
+    console.log(user);
     return (
         <>
             <tr>
                 <td>{user.name}</td>
                 <td>
-                    {user.qualities.map((quality) => {
-                        return <Qualitie quality={quality} key={quality._id} />;
-                    })}
+                    <QualitiesList user={user} />
                 </td>
                 <td>{user.profession.name}</td>
                 <td>{user.completedMeetings}</td>
