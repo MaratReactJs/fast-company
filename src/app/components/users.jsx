@@ -8,7 +8,7 @@ import SearchStatus from "./searchStatus";
 import UsersTable from "./usersTable";
 import _ from "lodash";
 
-const Users = ({ users, handleDelete, handleToogleBookmark }) => {
+const Users = () => {
     // currentPage = текущая страница
     // countUsers = количество пользователей
     // pageSize = количество пользователей на странице
@@ -24,6 +24,31 @@ const Users = ({ users, handleDelete, handleToogleBookmark }) => {
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
+
+    // prevState = предыдущее состояние
+
+    const [users, setUsers] = useState();
+
+    useEffect(() => {
+        api.users.fetchAll().then((data) => setUsers(data));
+    }, []);
+
+    const handleDelete = (userId) => {
+        setUsers((prevState) =>
+            prevState.filter((user) => user._id !== userId)
+        );
+    };
+
+    const handleToogleBookmark = (id) => {
+        setUsers(
+            users.map((user) => {
+                if (user._id === id) {
+                    user.bookmark = !user.bookmark;
+                }
+                return user;
+            })
+        );
+    };
 
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfessions(data));
@@ -51,57 +76,64 @@ const Users = ({ users, handleDelete, handleToogleBookmark }) => {
         setSelectedProf();
     };
 
-    const filteredUsers = selectedProf
-        ? users.filter((user) => user.profession._id === selectedProf._id)
-        : users;
+    if (users) {
+        const filteredUsers = selectedProf
+            ? users.filter((user) => user.profession._id === selectedProf._id)
+            : users;
 
-    const countUsers = filteredUsers.length;
-    const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
-    // метод из библиотеки Lodash для сортировки _orderBy(наш массив,массив из параметров по которым будут сортировка, массив с параметром направления сортировки  по возрастанию или убыванию asc и desc)
+        const countUsers = filteredUsers.length;
+        const sortedUsers = _.orderBy(
+            filteredUsers,
+            [sortBy.path],
+            [sortBy.order]
+        );
+        // метод из библиотеки Lodash для сортировки _orderBy(наш массив,массив из параметров по которым будут сортировка, массив с параметром направления сортировки  по возрастанию или убыванию asc и desc)
 
-    const usersCrop = paginate(sortedUsers, currentPage, pageSize);
+        const usersCrop = paginate(sortedUsers, currentPage, pageSize);
 
-    return (
-        <div className="d-flex ">
-            {professions && (
-                <div className="d-flex flex-column p-3">
-                    <GroupList
-                        items={professions}
-                        onItemSelect={handlePofessionsSelect}
-                        selectedItem={selectedProf}
-                    />
-                    <button
-                        type="button"
-                        className="btn btn-secondary mt-1"
-                        onClick={handleResetProf}
-                    >
-                        Сбросить
-                    </button>
-                </div>
-            )}
-
-            <div className="d-flex flex-column ">
-                <SearchStatus length={countUsers} />
-                {countUsers > 0 && (
-                    <UsersTable
-                        allUsers={usersCrop}
-                        handleDelete={handleDelete}
-                        handleToogleBookmark={handleToogleBookmark}
-                        onSort={handleSort}
-                        selectedSort={sortBy}
-                    />
+        return (
+            <div className="d-flex ">
+                {professions && (
+                    <div className="d-flex flex-column p-3">
+                        <GroupList
+                            items={professions}
+                            onItemSelect={handlePofessionsSelect}
+                            selectedItem={selectedProf}
+                        />
+                        <button
+                            type="button"
+                            className="btn btn-secondary mt-1"
+                            onClick={handleResetProf}
+                        >
+                            Сбросить
+                        </button>
+                    </div>
                 )}
-                <div className="d-flex justify-content-center">
-                    <Pagination
-                        itemsCount={countUsers}
-                        pageSize={pageSize}
-                        currentPage={currentPage}
-                        onPageChange={handlePageChange}
-                    />
+
+                <div className="d-flex flex-column ">
+                    <SearchStatus length={countUsers} />
+                    {countUsers > 0 && (
+                        <UsersTable
+                            allUsers={usersCrop}
+                            handleDelete={handleDelete}
+                            handleToogleBookmark={handleToogleBookmark}
+                            onSort={handleSort}
+                            selectedSort={sortBy}
+                        />
+                    )}
+                    <div className="d-flex justify-content-center">
+                        <Pagination
+                            itemsCount={countUsers}
+                            pageSize={pageSize}
+                            currentPage={currentPage}
+                            onPageChange={handlePageChange}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
+    return "Loading...";
 };
 
 Users.propTypes = {
