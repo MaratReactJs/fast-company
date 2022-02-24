@@ -4,6 +4,10 @@ import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
 
 const Table = ({ onSort, selectedSort, columns, children }) => {
+    // onSort = по сортировке
+    // selectedSort = выбранная сортировка
+    // columns = столбцы
+    // children = дети
     return (
         <table className="table">
             {children || (
@@ -21,7 +25,6 @@ const Table = ({ onSort, selectedSort, columns, children }) => {
 };
 
 Table.propTypes = {
-    allUsers: PropTypes.array,
     onSort: PropTypes.func,
     selectedSort: PropTypes.object,
     columns: PropTypes.array,

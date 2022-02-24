@@ -1,32 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { paginate } from "../utils/paginate";
-import Pagination from "./pagination";
+import Pagination from "../components/pagination";
 import PropTypes from "prop-types";
-import GroupList from "./groupList";
+import GroupList from "../components/groupList";
 import api from "../api";
-import SearchStatus from "./searchStatus";
-import UsersTable from "./usersTable";
+import SearchStatus from "../components/searchStatus";
+import UsersTable from "../components/usersTable";
 import _ from "lodash";
+
+// useState = использовать состояние
+// useEffect = использовать эффект
+// paginate = разбивать на страницы
 
 const Users = () => {
     // currentPage = текущая страница
     // countUsers = количество пользователей
-    // pageSize = количество пользователей на странице
+    // pageSize = размер страницы
     // pageIndex = показывает какая страница
-    // userCrop = разделение пользователей на страницы
+    // userCrop = обрезать пользователя (разделение пользователей на страницы)
     // selectedProf = выбранная профессия
     // sortBy = сортировать по
-    // path = по какому параметру сортировать
-    // order =  по какому направлению будет сортировка
+    // path = путь сортировки
+    // order =  порядок
+    // prevState = предыдущее состояние
+    // fetchAll = получить все
+    // setUsers = установить пользователей
+    // data = данные
+    // then = тогда
+    // handleDelete = обработчик удаления
+    // handleToogleBookmark = обработчик переключателя закладки
+    // handleSort = обработчик сортировки
+    // handlePofessionsSelect = обработчик выбора профессии
+    // handleResetProf = обработчик сброса професий
+    // orderBy = сортировать по
+    // filteredUsers = отфильтрованные пользоватли
 
     const pageSize = 8;
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-
-    // prevState = предыдущее состояние
-
     const [users, setUsers] = useState();
 
     useEffect(() => {

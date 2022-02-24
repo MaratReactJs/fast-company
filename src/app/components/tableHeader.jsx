@@ -2,6 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const TableHeader = ({ onSort, selectedSort, columns }) => {
+    // TableHeader = заголовок таблицы
+    // onSort = по сортировке
+    // selectedSort = выбранная сортировка
+    // column = столбец
+    // columns = столбцы
+    // handleSort = обработка сортировки
+    // item = элемент
+    // path = путь
+    // order = порядок
+    // currentPath = текущий путь
+    // renderSortArrow = визуализировать стрелку сортировки
+
     const handleSort = (item) => {
         if (selectedSort.path === item) {
             onSort((selectedSort) => ({

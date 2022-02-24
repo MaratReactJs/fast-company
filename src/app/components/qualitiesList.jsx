@@ -3,6 +3,7 @@ import React from "react";
 import Qualitie from "./qualitie";
 
 const QualitiesList = ({ user }) => {
+    // QualitiesList = список качеств
     return (
         <>
             {user.qualities.map((quality) => {

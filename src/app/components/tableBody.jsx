@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 
 const TableBody = ({ data, columns }) => {
-    // _get()= метод из библиотеки lodash помогает увидеть вложенные данные _get(наш item, вложенный путь который нужно показать columns[column].path)
+    // TableBody = тело таблицы
+    // data = данные
+    // columns = столбцы
+    // renderContent = визуализировать содержимое
+    // item = элемент
+    // component = компонент, деталь, часть
+    // _get()= получать()= метод из библиотеки lodash помогает увидеть вложенные данные _get(наш item, вложенный путь который нужно показать columns[column].path)
 
     const renderContent = (item, column) => {
         if (columns[column].component) {

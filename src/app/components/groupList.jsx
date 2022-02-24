@@ -8,10 +8,14 @@ const GroupList = ({
     onItemSelect,
     selectedItem
 }) => {
-    // items = объект который нужно отобразить
-    // valueProperty = передается id элементов объекта
-    // contentProperty = передается name элементов объекта
-    // selectedItem = выбранная профессия
+    // GroupList = список групп
+    // items = элементы
+    // valueProperty = значение свойства
+    // contentProperty = содержание свойства
+    // selectedItem = выбранный элемент
+    // defaultProps = реквезит по умолчанию
+    // oneOfType = один из типов
+    // onItemSelect = при выборе элемента
     // чтобы итерерироваться (пробежаться) по объекту, нужно  его трансформировать в массив с помощью Object.keys()
 
     return (

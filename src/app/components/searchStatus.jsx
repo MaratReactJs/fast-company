@@ -2,6 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const SearchStatus = ({ length }) => {
+    // статус поиска
+    // length = длина
+    // primary = наччальный
+    // renderPhrase = визуализировать фразу
+
     const clasess = length > 0 ? "badge bg-primary" : "badge bg-danger";
 
     const renderPhrase = (number) => {

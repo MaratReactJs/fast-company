@@ -1,7 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+// PropTypes = тип реквизита
 
 const Bookmark = ({ user, handleToogleBookmark }) => {
+    // Bookmark = закладка
+    // user = пользователь
+    // handleToogleBookmark = обработка переключателя закладки
     return (
         <>
             <button
