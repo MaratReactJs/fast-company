@@ -1,9 +1,10 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import NavBar from "./components/navBar";
+import UserPage from "./components/userPage";
 import Login from "./layouts/login";
 import Main from "./layouts/main";
-import Stats from "./layouts/stats";
+import NotFoundPage from "./layouts/notFoundPage";
 import Users from "./layouts/users";
 
 const App = () => {
@@ -11,13 +12,16 @@ const App = () => {
         <>
             <NavBar />
             <Switch>
-                <Route path="/login/stats" component={Stats} />
+                <Route exact path="/" component={Main} />
+                <Route path="/login" component={Login} />
                 <Route
-                    path="/login"
-                    render={(props) => <Login isAdmin={false} {...props} />}
+                    path="/users/:users_id"
+                    render={(props) => <UserPage {...props} />}
                 />
                 <Route path="/users" component={Users} />
-                <Route path="/" component={Main} />
+                <Route path="/404" component={NotFoundPage} />
+                <Redirect from="/stats" to="/users" />
+                <Redirect to="/404" />
             </Switch>
         </>
     );
