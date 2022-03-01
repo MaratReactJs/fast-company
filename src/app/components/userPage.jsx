@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import api from "../api";
 
-const UserPage = ({ match }) => {
+const UserPage = ({ match, history }) => {
     //
     const UserPageId = match.params.users_id;
 
@@ -11,6 +11,10 @@ const UserPage = ({ match }) => {
     useEffect(() => {
         api.users.getById(UserPageId).then((data) => setUser(data));
     }, []);
+
+    const handleReturn = () => {
+        history.replace("/users");
+    };
 
     if (user) {
         return (
@@ -27,7 +31,13 @@ const UserPage = ({ match }) => {
                 ))}
                 <h4>{"completedMeetings: " + user.completedMeetings}</h4>
                 <h2>{"Rate: " + user.rate}</h2>
-                <button>Все пользователи</button>
+                <button
+                    onClick={() => {
+                        handleReturn();
+                    }}
+                >
+                    Все пользователи
+                </button>
             </div>
         );
     }
@@ -35,7 +45,8 @@ const UserPage = ({ match }) => {
 };
 
 UserPage.propTypes = {
-    match: PropTypes.object
+    match: PropTypes.object,
+    history: PropTypes.object
 };
 
 export default UserPage;
