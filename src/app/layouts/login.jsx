@@ -5,7 +5,6 @@ import { validator } from "../utils/validator";
 const Login = () => {
     const [data, setData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
-    console.log(errors);
 
     const handleChange = ({ target }) => {
         setData((prevState) => ({ ...prevState, [target.name]: target.value }));
@@ -15,6 +14,9 @@ const Login = () => {
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
+            },
+            isEmail: {
+                message: "Email введен некорректно"
             }
         },
 
