@@ -41,6 +41,7 @@ const Users = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const [users, setUsers] = useState();
+    const [searchField, setSearchField] = useState("");
 
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
@@ -89,9 +90,15 @@ const Users = () => {
         setSelectedProf();
     };
 
+    const SearchFieldChange = ({ target }) => {
+        setSearchField(target.value);
+    };
+
     if (users) {
         const filteredUsers = selectedProf
             ? users.filter((user) => user.profession._id === selectedProf._id)
+            : searchField
+            ? users.filter((user) => user.name.includes(searchField))
             : users;
 
         const countUsers = filteredUsers.length;
@@ -125,6 +132,15 @@ const Users = () => {
 
                 <div className="d-flex flex-column ">
                     <SearchStatus length={countUsers} />
+                    <form className=" my-2 my-lg-0">
+                        <input
+                            className="form-control mr-sm-2"
+                            type="search"
+                            placeholder="Search..."
+                            onChange={SearchFieldChange}
+                            value={searchField}
+                        />
+                    </form>
                     {countUsers > 0 && (
                         <UsersTable
                             allUsers={usersCrop}
