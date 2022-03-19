@@ -80,6 +80,7 @@ const Users = () => {
 
     const handlePofessionsSelect = (item) => {
         setSelectedProf(item);
+        setSearchField("");
     };
 
     const handlePageChange = (pageIndex) => {
@@ -91,6 +92,7 @@ const Users = () => {
     };
 
     const SearchFieldChange = ({ target }) => {
+        setSelectedProf();
         setSearchField(target.value);
     };
 
@@ -98,7 +100,9 @@ const Users = () => {
         const filteredUsers = selectedProf
             ? users.filter((user) => user.profession._id === selectedProf._id)
             : searchField
-            ? users.filter((user) => user.name.includes(searchField))
+            ? users.filter((user) =>
+                  user.name.toLowerCase().includes(searchField.toLowerCase())
+              )
             : users;
 
         const countUsers = filteredUsers.length;
@@ -132,15 +136,13 @@ const Users = () => {
 
                 <div className="d-flex flex-column ">
                     <SearchStatus length={countUsers} />
-                    <form className=" my-2 my-lg-0">
-                        <input
-                            className="form-control mr-sm-2"
-                            type="search"
-                            placeholder="Search..."
-                            onChange={SearchFieldChange}
-                            value={searchField}
-                        />
-                    </form>
+                    <input
+                        className="form-control mr-sm-2"
+                        type="search"
+                        placeholder="Search..."
+                        onChange={SearchFieldChange}
+                        value={searchField}
+                    />
                     {countUsers > 0 && (
                         <UsersTable
                             allUsers={usersCrop}

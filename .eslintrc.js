@@ -15,7 +15,7 @@ module.exports = {
     rules: {
         "multiline-ternary": "off",
         indent: [
-            "error",
+            "off",
             4,
             { SwitchCase: 1, ignoredNodes: ["ConditionalExpression"] }
         ],
