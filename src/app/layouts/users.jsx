@@ -1,160 +1,119 @@
 import React, { useState, useEffect } from "react";
 import { paginate } from "../utils/paginate";
-import Pagination from "../components/pagination";
+import Pagination from "./../components/pagination";
 import PropTypes from "prop-types";
-import GroupList from "../components/groupList";
-import api from "../api";
-import SearchStatus from "../components/searchStatus";
-import UsersTable from "../components/usersTable";
+import GroupList from "./../components/groupList";
+import api from "./../api";
+import SearchStatus from "./../components/searchStatus";
+import UsersTable from "./../components/usersTable";
 import _ from "lodash";
 
-// useState = использовать состояние
-// useEffect = использовать эффект
-// paginate = разбивать на страницы
-
 const Users = () => {
-    // currentPage = текущая страница
-    // countUsers = количество пользователей
-    // pageSize = размер страницы
-    // pageIndex = показывает какая страница
-    // userCrop = обрезать пользователя (разделение пользователей на страницы)
-    // selectedProf = выбранная профессия
-    // sortBy = сортировать по
-    // path = путь сортировки
-    // order =  порядок
-    // prevState = предыдущее состояние
-    // fetchAll = получить все
-    // setUsers = установить пользователей
-    // data = данные
-    // then = тогда
-    // handleDelete = обработчик удаления
-    // handleToogleBookmark = обработчик переключателя закладки
-    // handleSort = обработчик сортировки
-    // handlePofessionsSelect = обработчик выбора профессии
-    // handleResetProf = обработчик сброса професий
-    // orderBy = сортировать по
-    // filteredUsers = отфильтрованные пользоватли
-
-    const pageSize = 8;
     const [currentPage, setCurrentPage] = useState(1);
-    const [professions, setProfessions] = useState();
+
     const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-    const [users, setUsers] = useState();
-    const [searchField, setSearchField] = useState("");
 
-    useEffect(() => {
-        api.users.fetchAll().then((data) => setUsers(data));
-    }, []);
+    const [professions, setProfessions] = useState();
 
-    const handleDelete = (userId) => {
-        setUsers((prevState) =>
-            prevState.filter((user) => user._id !== userId)
-        );
-    };
-
-    const handleToogleBookmark = (id) => {
-        setUsers(
-            users.map((user) => {
-                if (user._id === id) {
-                    user.bookmark = !user.bookmark;
-                }
-                return user;
-            })
-        );
-    };
+    const [sortBy, setSortBy] = useState({
+        path: "name",
+        order: "asc",
+        icon: "up"
+    });
 
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfessions(data));
     }, []);
 
     useEffect(() => {
-        setCurrentPage();
+        setCurrentPage(1);
     }, [selectedProf]);
 
-    // чтобы вызвать useEffect один раз, нужно добавить через запятую пустой объект. В этот объект мы вписываем то что нам надо отследить
+    const pageSize = 8;
 
-    const handleSort = (item) => {
-        setSortBy(item);
+    const [users, setUsers] = useState();
+
+    useEffect(() => {
+        api.users.fetchAll().then((data) => setUsers(data));
+    }, []);
+
+    const handleDelete = (userId) => {
+        setUsers(users.filter((user) => user._id !== userId));
+    };
+    const handleToggleBookMark = (id) => {
+        setUsers(
+            users.map((user) => {
+                if (user._id === id) {
+                    return { ...user, bookmark: !user.bookmark };
+                }
+                return user;
+            })
+        );
     };
 
-    const handlePofessionsSelect = (item) => {
+    const handleProfessionSelect = (item) => {
         setSelectedProf(item);
-        setSearchField("");
     };
 
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
 
-    const handleResetProf = () => {
-        setSelectedProf();
-    };
-
-    const SearchFieldChange = ({ target }) => {
-        setSelectedProf();
-        setSearchField(target.value);
+    const handleSort = (item) => {
+        setSortBy(item);
     };
 
     if (users) {
         const filteredUsers = selectedProf
-            ? users.filter((user) => user.profession._id === selectedProf._id)
-            : searchField
-            ? users.filter((user) =>
-                  user.name.toLowerCase().includes(searchField.toLowerCase())
+            ? users.filter(
+                  (user) =>
+                      JSON.stringify(user.profession) ===
+                      JSON.stringify(selectedProf)
               )
             : users;
 
-        const countUsers = filteredUsers.length;
+        const count = filteredUsers.length;
         const sortedUsers = _.orderBy(
             filteredUsers,
             [sortBy.path],
             [sortBy.order]
         );
-        // метод из библиотеки Lodash для сортировки _orderBy(наш массив,массив из параметров по которым будут сортировка, массив с параметром направления сортировки  по возрастанию или убыванию asc и desc)
-
-        const usersCrop = paginate(sortedUsers, currentPage, pageSize);
+        const userCrop = paginate(sortedUsers, currentPage, pageSize);
+        const clearFilter = () => {
+            setSelectedProf();
+        };
 
         return (
             <div className="d-flex ">
                 {professions && (
-                    <div className="d-flex flex-column p-3">
+                    <div className="d-flex  flex-column flex-shrink-0 p-3">
                         <GroupList
                             items={professions}
-                            onItemSelect={handlePofessionsSelect}
+                            onItemSelect={handleProfessionSelect}
                             selectedItem={selectedProf}
                         />
                         <button
-                            type="button"
-                            className="btn btn-secondary mt-1"
-                            onClick={handleResetProf}
+                            className="btn btn-secondary mt-2"
+                            onClick={clearFilter}
                         >
-                            Сбросить
+                            Очистить
                         </button>
                     </div>
                 )}
-
                 <div className="d-flex flex-column ">
-                    <SearchStatus length={countUsers} />
-                    <input
-                        className="form-control mr-sm-2"
-                        type="search"
-                        placeholder="Search..."
-                        onChange={SearchFieldChange}
-                        value={searchField}
-                    />
-                    {countUsers > 0 && (
+                    <SearchStatus length={count} />
+                    {count > 0 && (
                         <UsersTable
-                            allUsers={usersCrop}
-                            handleDelete={handleDelete}
-                            handleToogleBookmark={handleToogleBookmark}
+                            users={userCrop}
                             onSort={handleSort}
-                            selectedSort={sortBy}
+                            currentSort={sortBy}
+                            onToggleBookMark={handleToggleBookMark}
+                            onDelete={handleDelete}
                         />
                     )}
                     <div className="d-flex justify-content-center">
                         <Pagination
-                            itemsCount={countUsers}
+                            itemsCount={count}
                             pageSize={pageSize}
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
@@ -168,9 +127,7 @@ const Users = () => {
 };
 
 Users.propTypes = {
-    users: PropTypes.array,
-    handleDelete: PropTypes.func,
-    handleToogleBookmark: PropTypes.func
+    users: PropTypes.array
 };
 
 export default Users;

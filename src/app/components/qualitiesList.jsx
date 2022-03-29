@@ -1,20 +1,19 @@
-import PropTypes from "prop-types";
 import React from "react";
 import Qualitie from "./qualitie";
+import PropTypes from "prop-types";
 
-const QualitiesList = ({ user }) => {
-    // QualitiesList = список качеств
+const QualitiesList = ({ qualities }) => {
     return (
         <>
-            {user.qualities.map((quality) => {
-                return <Qualitie quality={quality} key={quality._id} />;
-            })}
+            {qualities.map((qual) => (
+                <Qualitie {...qual} key={qual._id} />
+            ))}
         </>
     );
 };
 
 QualitiesList.propTypes = {
-    user: PropTypes.object
+    qualities: PropTypes.array
 };
 
 export default QualitiesList;

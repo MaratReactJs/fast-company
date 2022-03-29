@@ -1,23 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-// PropTypes = Типы реквизита
 
-const Qualitie = ({ quality }) => {
-    // Qualitie = качество
-    // quality = качественный
-    // span = охватывать
-    // badge = значок
+const Qualitie = ({ color, name, _id }) => {
     return (
-        <>
-            <span className={`badge bg-${quality.color} me-2`}>
-                {quality.name}
-            </span>
-        </>
+        <span className={"badge m-1 bg-" + color} key={_id}>
+            {name}
+        </span>
     );
 };
 
 Qualitie.propTypes = {
-    quality: PropTypes.object
+    color: PropTypes.string,
+    name: PropTypes.string,
+    _id: PropTypes.string
 };
 
 export default Qualitie;

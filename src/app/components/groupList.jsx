@@ -8,16 +8,6 @@ const GroupList = ({
     onItemSelect,
     selectedItem
 }) => {
-    // GroupList = список групп
-    // items = элементы
-    // valueProperty = значение свойства
-    // contentProperty = содержание свойства
-    // selectedItem = выбранный элемент
-    // defaultProps = реквезит по умолчанию
-    // oneOfType = один из типов
-    // onItemSelect = при выборе элемента
-    // чтобы итерерироваться (пробежаться) по объекту, нужно  его трансформировать в массив с помощью Object.keys()
-
     return (
         <ul className="list-group">
             {Object.keys(items).map((item) => {
@@ -38,7 +28,7 @@ const GroupList = ({
         </ul>
     );
 };
-// дефолтные пропсы на случай обработки объекта, если везде используются одинаковые данные (_id и name), а если нет то передаем как обчычно через пропсы
+
 GroupList.defaultProps = {
     valueProperty: "_id",
     contentProperty: "name"

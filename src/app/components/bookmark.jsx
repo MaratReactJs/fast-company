@@ -1,32 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-// PropTypes = тип реквизита
 
-const Bookmark = ({ user, handleToogleBookmark }) => {
-    // Bookmark = закладка
-    // user = пользователь
-    // handleToogleBookmark = обработка переключателя закладки
+const BookMark = ({ status, ...rest }) => {
     return (
-        <>
-            <button
-                className="btn btn-primary"
-                onClick={() => {
-                    handleToogleBookmark(user._id);
-                }}
-            >
-                <i
-                    className={`"bi bi-bookmark" ${
-                        user.bookmark ? "bi bi-bookmark-fill" : "bi bi-bookmark"
-                    }`}
-                ></i>
-            </button>
-        </>
+        <button {...rest}>
+            <i className={"bi bi-bookmark" + (status ? "-heart-fill" : "")}></i>
+        </button>
     );
 };
 
-Bookmark.propTypes = {
-    user: PropTypes.object,
-    handleToogleBookmark: PropTypes.func
+BookMark.propTypes = {
+    status: PropTypes.bool
 };
 
-export default Bookmark;
+export default BookMark;
