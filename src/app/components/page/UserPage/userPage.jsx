@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import api from "../api";
+import api from "../../../api";
+import { useHistory } from "react-router-dom";
 
-const UserPage = ({ match, history }) => {
-    //
-    const UserPageId = match.params.users_id;
+const UserPage = ({ userId }) => {
+    const history = useHistory();
 
     const [user, setUser] = useState();
 
     useEffect(() => {
-        api.users.getById(UserPageId).then((data) => setUser(data));
+        api.users.getById(userId).then((data) => setUser(data));
     }, []);
 
     const handleReturn = () => {
@@ -45,7 +45,7 @@ const UserPage = ({ match, history }) => {
 };
 
 UserPage.propTypes = {
-    match: PropTypes.object,
+    userId: PropTypes.string,
     history: PropTypes.object
 };
 
