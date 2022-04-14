@@ -1,4 +1,4 @@
-export const professionsObject = {
+export const professions = {
     doctor: { _id: "67rdca3eeb7f6fgeed471818", name: "Доктор" },
     waiter: { _id: "67rdca3eeb7f6fgeed471820", name: "Официант" },
     physics: { _id: "67rdca3eeb7f6fgeed471814", name: "Физик" },
@@ -6,7 +6,7 @@ export const professionsObject = {
     actor: { _id: "67rdca3eeb7f6fgeed471824", name: "Актер" },
     cook: { _id: "67rdca3eeb7f6fgeed471829", name: "Повар" }
 };
-export const professions = [
+export const professionsObject = [
     { _id: "67rdca3eeb7f6fgeed471818", name: "Доктор" },
     { _id: "67rdca3eeb7f6fgeed471820", name: "Официант" },
     { _id: "67rdca3eeb7f6fgeed471814", name: "Физик" },
