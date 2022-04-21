@@ -17,7 +17,12 @@ const UsersListPage = () => {
         order: "asc",
         icon: "up"
     });
+    const [searchField, setSearchField] = useState("");
     const pageSize = 8;
+
+    const searchFieldChange = ({ target }) => {
+        setSearchField(target.value);
+    };
 
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfessions(data));
@@ -64,6 +69,10 @@ const UsersListPage = () => {
                       JSON.stringify(user.profession) ===
                       JSON.stringify(selectedProf)
               )
+            : searchField
+            ? users.filter((user) =>
+                  user.name.toLowerCase().includes(searchField.toLowerCase())
+              )
             : users;
 
         const count = filteredUsers.length;
@@ -73,6 +82,7 @@ const UsersListPage = () => {
             [sortBy.order]
         );
         const userCrop = paginate(sortedUsers, currentPage, pageSize);
+
         const clearFilter = () => {
             setSelectedProf();
         };
@@ -96,6 +106,14 @@ const UsersListPage = () => {
                 )}
                 <div className="d-flex flex-column ">
                     <SearchStatus length={count} />
+                    <input
+                        className="form-control mr-sm-2"
+                        type="search"
+                        placeholder="Search"
+                        onChange={searchFieldChange}
+                        value={searchField}
+                    />
+
                     {count > 0 && (
                         <UsersTable
                             users={userCrop}
