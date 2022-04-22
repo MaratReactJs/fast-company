@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import api from "../../../api";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const UserPage = ({ userId }) => {
-    const history = useHistory();
-
     const [user, setUser] = useState();
 
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data));
     }, []);
-
-    const handleReturn = () => {
-        history.replace("/users");
-    };
 
     if (user) {
         return (
@@ -31,13 +25,13 @@ const UserPage = ({ userId }) => {
                 ))}
                 <h4>{"completedMeetings: " + user.completedMeetings}</h4>
                 <h2>{"Rate: " + user.rate}</h2>
-                <button
-                    onClick={() => {
-                        handleReturn();
-                    }}
+                <Link
+                    className="btn btn-secondary mb-3"
+                    type="button"
+                    to="/edit"
                 >
-                    Все пользователи
-                </button>
+                    Изменить
+                </Link>
             </div>
         );
     }

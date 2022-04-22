@@ -22,6 +22,7 @@ const UsersListPage = () => {
 
     const searchFieldChange = ({ target }) => {
         setSearchField(target.value);
+        setSelectedProf();
     };
 
     useEffect(() => {
@@ -52,6 +53,7 @@ const UsersListPage = () => {
 
     const handleProfessionSelect = (item) => {
         setSelectedProf(item);
+        setSearchField("");
     };
 
     const handlePageChange = (pageIndex) => {
