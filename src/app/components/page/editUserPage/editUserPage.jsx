@@ -18,6 +18,7 @@ const EditUserPage = () => {
         sex: "male",
         qualities: []
     });
+
     const [professions, setProfession] = useState([]);
     const [qualities, setQualities] = useState({});
     const [errors, setErrors] = useState({});
@@ -39,6 +40,7 @@ const EditUserPage = () => {
         }
         return qualitiesArray;
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
@@ -52,11 +54,14 @@ const EditUserPage = () => {
             })
             .then((data) => history.push(`/users/${data._id}`));
     };
-    console.log(data._id);
+    // трансформируем qualities
     const transformData = (data) => {
         return data.map((qual) => ({ label: qual.name, value: qual._id }));
     };
     useEffect(() => {
+        console.log(
+            "отслеживаем текущего пользователя в котором нажали изменить"
+        );
         setIsLoading(true);
         api.users.getById(userId).then(({ profession, qualities, ...data }) =>
             setData((prevState) => ({
@@ -69,7 +74,9 @@ const EditUserPage = () => {
         api.qualities.fetchAll().then((data) => setQualities(data));
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
+
     useEffect(() => {
+        console.log("отслеживаем каждое изменение в data");
         if (data._id) setIsLoading(false);
     }, [data]);
 
