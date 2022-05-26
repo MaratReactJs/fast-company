@@ -36,7 +36,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed471815",
         name: "Джон Дориан",
-        email: "Jony7351@tw.com",
+        email: "johndorian@fastcompany.ru",
         sex: "male",
         profession: professions.doctor,
         qualities: [qualities.tedious, qualities.uncertain, qualities.strange],
@@ -47,7 +47,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed471816",
         name: "Кокс",
-        email: "white4571@twipet.com",
+        email: "koks@fastcompany.ru",
         sex: "male",
         profession: professions.doctor,
         qualities: [qualities.buller, qualities.handsome, qualities.alcoholic],
@@ -58,7 +58,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed471817",
         name: "Боб Келсо",
-        email: "bob007@tw.com",
+        email: "bobkelso@fastcompany.ru",
         sex: "male",
         profession: professions.doctor,
         qualities: [qualities.buller],
@@ -69,7 +69,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed471818",
         name: "Рэйчел Грин",
-        email: "green7311@fam.biz",
+        email: "rachelgreene@fastcompany.ru",
         sex: "female",
         profession: professions.waiter,
         qualities: [qualities.uncertain],
@@ -80,7 +80,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed471819",
         name: "Шелдон Купер",
-        email: "mindgames6878@phis.tech",
+        email: "sheldoncooper@fastcompany.ru",
         sex: "male",
         profession: professions.physics,
         qualities: [qualities.strange, qualities.tedious],
@@ -91,7 +91,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed471820",
         name: "Леонард Хофстедтер",
-        email: "mindes000@phis.tech",
+        email: "leonardhofstedter@fastcompany.ru",
         sex: "male",
         profession: professions.physics,
         qualities: [qualities.strange, qualities.uncertain],
@@ -102,7 +102,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed471821",
         name: "Говард Воловиц",
-        email: "gov1903@phis.tech",
+        email: "howardwolowitz@fastcompany.ru",
         sex: "male",
         profession: professions.engineer,
         qualities: [qualities.strange, qualities.tedious],
@@ -113,7 +113,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed471822",
         name: "Никола Тесла",
-        email: "electro@underground.tech",
+        email: "nikolatesla@fastcompany.ru",
         sex: "male",
         profession: professions.engineer,
         qualities: [qualities.handsome],
@@ -124,7 +124,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed471823",
         name: "Моника Геллер",
-        email: "mono@super.com",
+        email: "monicageller@fastcompany.ru",
         sex: "female",
         profession: professions.cook,
         qualities: [qualities.strange, qualities.uncertain],
@@ -135,7 +135,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed471824",
         name: "Рататуй",
-        email: "ratatatata@underground.com",
+        email: "ratatouille@fastcompany.ru",
         sex: "male",
         profession: professions.cook,
         qualities: [qualities.handsome, qualities.buller],
@@ -146,7 +146,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed47181f",
         name: "Джоуи Триббиани",
-        email: "joe@trib.com",
+        email: "joeytribbiani@fastcompany.ru",
         sex: "male",
         profession: professions.actor,
         qualities: [qualities.uncertain, qualities.strange],
@@ -157,7 +157,7 @@ const users = [
     {
         _id: "67rdca3eeb7f6fgeed47181r",
         name: "Брэд Питт",
-        email: "superstar@star.com",
+        email: "bradpitt@fastcompany.ru",
         sex: "male",
         profession: professions.actor,
         qualities: [qualities.handsome],
@@ -167,49 +167,33 @@ const users = [
     }
 ];
 if (!localStorage.getItem("users")) {
-    // Если в localStorage нету "users"
-    localStorage.setItem("users", JSON.stringify(users)); // То закидываем туда users
+    localStorage.setItem("users", JSON.stringify(users));
 }
 
 const fetchAll = () =>
-    // создаем Promise с одним положительным атрибутом (resolve)
     new Promise((resolve) => {
-        // задаем setTimeout на 2 секунды
         window.setTimeout(function () {
-            // в resolve передаем распарсеный "users" из localStorage
             resolve(JSON.parse(localStorage.getItem("users")));
         }, 2000);
-        // после когда resolve будет выполнен мы сможем где угодно users через метод then например api.users.fetchAll().then((data) => setUsers(data));
     });
 const update = (id, data) =>
-    // создаем Promise с одним положительным атрибутом (resolve)
     new Promise((resolve) => {
-        // получаем распарсенных юзеров
         const users = JSON.parse(localStorage.getItem("users"));
-        // возвращаем индекс юзера совпавшего по id
         const userIndex = users.findIndex((u) => u._id === id);
-        // добавляем data т.е. изменения в юзера с этим индексом
         users[userIndex] = { ...users[userIndex], ...data };
-        // далее передаем юзеров в localStorage
         localStorage.setItem("users", JSON.stringify(users));
-        // и передаем в resolve
         resolve(users[userIndex]);
-        // // после когда resolve будет выполнен мы сможем запросить список с изменеными юзерами
     });
 
 const getById = (id) =>
-    // создаем Promise с одним положительным атрибутом (resolve)
     new Promise((resolve) => {
-        // задаем setTimeout на 1 секунду
         window.setTimeout(function () {
-            // в resolve передаем распарсенного юзера из  "users" совпавшему по id(по которому кликнули)  полученного из localStorage
             resolve(
                 JSON.parse(localStorage.getItem("users")).find(
                     (user) => user._id === id
                 )
             );
         }, 1000);
-        // после когда resolve будет выполнен мы сможем где угодно  получить юзера через метод then например api.users.getById(userId).then((data) => setUser(data));
     });
 export default {
     fetchAll,
