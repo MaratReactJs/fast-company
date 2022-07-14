@@ -1,0 +1,28 @@
+{
+  "files": {
+    "Cart.js": "/static/js/Cart.5be29fe8.chunk.js",
+    "Cart.js.map": "/static/js/Cart.5be29fe8.chunk.js.map",
+    "FullPizza.js": "/static/js/FullPizza.6a857793.chunk.js",
+    "FullPizza.js.map": "/static/js/FullPizza.6a857793.chunk.js.map",
+    "NotFound.js": "/static/js/NotFound.ed5a9553.chunk.js",
+    "NotFound.js.map": "/static/js/NotFound.ed5a9553.chunk.js.map",
+    "main.css": "/static/css/main.ada55045.chunk.css",
+    "main.js": "/static/js/main.74fcbe8f.chunk.js",
+    "main.js.map": "/static/js/main.74fcbe8f.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.5e0eabf0.js",
+    "runtime-main.js.map": "/static/js/runtime-main.5e0eabf0.js.map",
+    "static/js/5.11c7e13c.chunk.js": "/static/js/5.11c7e13c.chunk.js",
+    "static/js/5.11c7e13c.chunk.js.map": "/static/js/5.11c7e13c.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.ada55045.chunk.css.map": "/static/css/main.ada55045.chunk.css.map",
+    "static/js/5.11c7e13c.chunk.js.LICENSE.txt": "/static/js/5.11c7e13c.chunk.js.LICENSE.txt",
+    "static/media/empty-cart.db905d1f.png": "/static/media/empty-cart.db905d1f.png",
+    "static/media/pizza-logo.56ac8703.svg": "/static/media/pizza-logo.56ac8703.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5e0eabf0.js",
+    "static/js/5.11c7e13c.chunk.js",
+    "static/css/main.ada55045.chunk.css",
+    "static/js/main.74fcbe8f.chunk.js"
+  ]
+}
